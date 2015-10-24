@@ -301,8 +301,10 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
             center.y = cvRound((r->y + r->height*0.5)*scale);
             radius = cvRound((r->width + r->height)*0.25*scale);
             circle( img, center, radius, color, 3, 8, 0 );
+	    printf("%d %d [%d, %d]\n", r->x, r->y, r->width, r->height);
             now_timeget(buffer);
-            cv::imwrite(buffer, img);
+	    cv::Mat cut_img(img, cv::Rect(r->x*scale, r->y*scale, r->width*scale, r->height*scale));
+            cv::imwrite(buffer, cut_img);
       }
         else
             rectangle( img, cvPoint(cvRound(r->x*scale), cvRound(r->y*scale)),
