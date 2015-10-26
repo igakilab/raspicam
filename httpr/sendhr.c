@@ -100,7 +100,7 @@ int send_httpr(
     return 1;
 }
 
-void getClientAddr(char *client_network_device, char *dest, int dlen){
+void getClientAddr(char *device_name, char *dest, int dlen){
 	
     int s = socket(AF_INET, SOCK_STREAM, 0);
  
