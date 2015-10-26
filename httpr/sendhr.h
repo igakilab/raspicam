@@ -12,5 +12,5 @@ int send_httpr(
 	FILE *out
 );
 
-int send_imgFileName(char *file_name);
+void send_imgFileName(char *file_name);
 void getClientAddr(char *device_name, char *dest, int dlen);

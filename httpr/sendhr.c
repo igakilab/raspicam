@@ -114,3 +114,21 @@ void getClientAddr(char *device_name, char *dest, int dlen){
     memcpy( &addr, &ifr.ifr_ifru.ifru_addr, sizeof(struct sockaddr_in) );
     strncpy(dest, inet_ntoa(addr.sin_addr), dlen);
 }
+
+void send_imgFileName(char *file_name){
+
+	char uri[1024];
+	char client_addr[128];
+
+	char method_name[] = "/addimg";
+
+	strncpy(uri, SIMGLINK_URI_HEAD, 1024);
+	strncat(uri, method_name, 1024);
+	getClientAddr(CLIENT_NETWORK_DEVICE, client_addr, 128);
+	strncat(uri, "/", 1024);
+	strncat(uri, client_addr, 128);
+	strncat(uri, "/", 1024);
+	strncat(uri, file_name, 1024);
+
+	send_httpr(SIMGLINK_HOST, uri, SIMGLINK_PORTNO, stdout);
+}
