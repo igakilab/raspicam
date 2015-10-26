@@ -337,7 +337,7 @@ void now_timeget(char buffer[]){
 	time_t now = time(NULL);
 	struct tm *pnow = localtime(&now);
 
-	sprintf(buffer,"/images/%d-%d-%d %d:%d:%d.jpg",
+	sprintf(buffer,"/etc/www/images/%d-%d-%d %d:%d:%d.jpg",
 	pnow->tm_year+1900,
 	pnow->tm_mon+1,
 	pnow->tm_mday,
