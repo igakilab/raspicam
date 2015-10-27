@@ -128,9 +128,9 @@ void send_imgFileName(char *file_name){
 	strncat(uri, "/", 1024);
 	strncat(uri, file_name, 1024);
 
-	fprintf(stdout, "host : %s\n", SIMGLINK_HOST);
-	fprintf(stdout, "portno : %d\n", SIMGLINK_PORTNO);
-	fprintf(stdout, "uri : %s\n", uri);
+	//fprintf(stdout, "host : %s\n", SIMGLINK_HOST);
+	//fprintf(stdout, "portno : %d\n", SIMGLINK_PORTNO);
+	//fprintf(stdout, "uri : %s\n", uri);
 
-	send_httpr(SIMGLINK_HOST, uri, SIMGLINK_PORTNO, stdout);
+	send_httpr(SIMGLINK_HOST, uri, SIMGLINK_PORTNO, NULL);
 }
