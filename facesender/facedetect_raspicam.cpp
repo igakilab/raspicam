@@ -16,7 +16,7 @@
 using namespace std;
 using namespace cv;
 
-void now_timeget(char buffer[]);
+void now_timeget(char buffer[], int cnt);
 
 static void help()
 {
@@ -244,7 +244,7 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 {
     //int cnt=0;
     char file_name[128];
-    char dest_path[256] = "/var/www/images/";
+    char dest_path[256];
     int i = 0;
     double t = 0;
     vector<Rect> faces, faces2;
@@ -289,6 +289,7 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
     }
     t = (double)cvGetTickCount() - t;
     //printf( "detection time = %g ms\n", t/((double)cvGetTickFrequency()*1000.) );
+    int cnt = 0;
     for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); r++, i++ )
     {
         Mat smallImgROI;
@@ -305,8 +306,10 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
             radius = cvRound((r->width + r->height)*0.25*scale);
             circle( img, center, radius, color, 3, 8, 0 );
 	    printf("%d %d [%d, %d]\n", r->x, r->y, r->width, r->height);
-            now_timeget(file_name);
+            now_timeget(file_name, cnt);
+	    cnt++;
 	    cv::Mat cut_img(img, cv::Rect(r->x*scale, r->y*scale, r->width*scale, r->height*scale));
+	    sprintf(dest_path, "/var/www/images/");
 	    strncat(dest_path, file_name, 256);
             cv::imwrite(dest_path, cut_img);
 	    send_imgFileName((char*)file_name); //send to server!!
@@ -338,15 +341,16 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
     cv::imshow( "result", img );
 }
 
-void now_timeget(char buffer[]){
+void now_timeget(char buffer[], int cnt){
 	time_t now = time(NULL);
 	struct tm *pnow = localtime(&now);
 
-	sprintf(buffer,"%d-%d-%d_%d:%d:%d.jpg",
+	sprintf(buffer,"%d-%d-%d_%d:%d:%d_%d.jpg",
 	pnow->tm_year+1900,
 	pnow->tm_mon+1,
 	pnow->tm_mday,
 	pnow->tm_hour,
 	pnow->tm_min,
-	pnow->tm_sec);
+	pnow->tm_sec,
+	cnt);
 }
