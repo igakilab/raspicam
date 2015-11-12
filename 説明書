@@ -1,0 +1,82 @@
+raspicam
+ラズパイの顔認証
+
+初期設定
+<Wifi>
+
+	Raspberry Piから  
+	lsusb  
+	Bus 001 Device 004: ID 2019:ab2a PLANEX GW-USNano2 802.11n Wireless Adapter [Realtek RTL8188CUS]  
+	Raspberry PiのUSBポートにぶっさすだけで無線LANアダプタの認識をしてくれます。
+
+	ルーター本体を見てSSIDとPassphraseを入力します。
+	wpa_passphrase Your_SSID Your_Passphrase
+
+	下記のようなものが出力されます。
+	network={
+		ssid="Your_SSID "
+		#psk="Your_Passphrase"
+		psk=hogehogehogehogehogehogehogehogehoge
+	}
+
+	上記をコピーして下記のconfにペーストします。
+	sudo vim /etc/wpa_supplicant/wpa_supplicant.conf
+	ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+	update_config=1
+	network={
+		ssid="Your_SSID"
+		#psk="Your_Passphrase"
+		psk=hogehogehogehogehogehogehogehogehoge
+		key_mgmt=WPA-PSK #←追加
+		proto=WPA2 #←追加
+		pairwise=CCMP #←追加
+		group=CCMP #←追加
+		priority=2 #←追加
+	}
+
+	これでWPA2-PSK(AES)になったはず。。
+	最後に下記のファイルを編集します。
+	sudo vim /etc/network/interfaces
+	auto lo
+
+	iface lo inet loopback
+	\# iface eth0 inet dhcp
+	iface eth0 inet static
+	address 192.168.0.121
+	netmask 255.255.255.0
+	gateway 192.168.0.1
+	 
+	auto wlan0
+	allow-hotplug wlan0
+	\#iface wlan0 inet manual
+	iface wlan0 inet static
+	address 192.168.0.121
+	netmask 255.255.255.0
+	gateway 192.168.0.1
+	 
+	\#wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+	iface default inet dhcp
+
+	address、netmask、gatewayは各自異なります。自分のルーターの設定にあわせて変更してください。
+
+	最後に電源を引っこ抜いて、
+	LANケーブルをはずして、電源を入れて完了です。
+
+<Raspbian上でのカメラの利用方法>
+
+	まず初めにRaspberry Piを起動し、ユーザー名をpi、パスワードをraspberryとしてログインします（ユーザー名、パスワードをデフォルトの状態から変更している場合は、ご自身のも
+	のを入力してください）。
+	ターミナルに次のようなコマンドを入力し、Raspberry Piのファームウェアを最新の状態に更新します。
+	sudo apt-get update
+	sudo apt-get upgrade
+	次のようなコマンドを入力し、Raspberry Pi用のコンフィグレーション設定にアクセスしてください。
+	sudo raspi-config
+	"camera"の項目で"enable"を選択してください。
+	"Finish"を選んでリブートします。
+
+<顔認識>
+	gitからraspicamファイルをもってきて、makeでコンパイルする。
+	start.shで実行。
+
+
