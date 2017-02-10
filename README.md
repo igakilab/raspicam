@@ -4,22 +4,18 @@
 ## raspberry piの初期設定
 本プログラムではraspberry piを使用する.以下の手順により初期設定を行う.  
 
-1. 初回起動からSSHログインまで
+1. 初回起動からSSHログインまで  
 https://igakilab.gitbooks.io/gt-2016-mojava-manual/content/chapter1/raspberrypi.html  
 https://igakilab.gitbooks.io/gt-2016-mojava-manual/content/chapter1/raspi-system-settings.html  
 を参考に,raspberry piの初期設定を行う."SSHによるログイン"まで完了させると,同一ネットワークのPCからRLoginやTera TermなどのターミナルソフトでSSH接続できるようになる.  
-なお,上記のマニュアルでも述べられているが,キーボードレイアウトおよび言語設定の変更についてはhttp://ryus.co.jp/blog/raspberrypi3-3/を参照することを勧める.GUIベースでの変更が可能であり,比較的簡単である.  
+なお,上記のマニュアルでも述べられているが,キーボードレイアウトおよび言語設定の変更については http://ryus.co.jp/blog/raspberrypi3-3/ を参照することを勧める.GUIベースでの変更が可能であり,比較的簡単である.  
 
 2. カメラの接続および有効化  
 本プログラムではraspberry piのカメラモジュールを使用する.以下の記述と写真を参考にカメラモジュールを接続・有効化する.  
 なお,モジュールの着脱時はraspberry piの電源を落とすことを推奨する.  
-  
 ![カメラモジュール](readme_images/camModule1.jpg)  
-  
 これがカメラモジュールである.これを  
-  
 ![カメラモジュール接続例](readme_images/camModule2.jpg)  
-  
 この写真通りに接続する.  
 接続が完了したら電源を接続し,raspberry piを起動する.起動後ターミナルを開き,  
 sudo raspi-config  
@@ -44,21 +40,27 @@ git clone git://github.com/igakilab/raspicam
 
 3. 送信先IPアドレスの変更
 このプログラムを https://github.com/igakilab/webapplication で利用する場合,送信先IPアドレスの変更が必要である.  
-~/raspicam/facesender/sendhr.h にある定義を変更することで,特定マシンへのデータ送信が可能となる.必要ならば,nano等のテキストエディタを用いて変更する.  
-
+nano等のテキストエディタを用いて ~/raspicam/facesender/sendhr.h にある定義を変更することで,特定マシンへのデータ送信が可能となる.
 ```sendhr.h
-#define SIMGLINK_URI_HEAD "/LabMemberManager/dwr/jsonp/FaceCollector/addImg"  
-#define SIMGLINK_HOST "150.89.xxx.xxx"  //←ここをwebapplicationで使用しているマシンのIPアドレスに変更する.  
-#define SIMGLINK_PORTNO 8080  
-```  
+#define SIMGLINK_URI_HEAD "/LabMemberManager/dwr/jsonp/FaceCollector/addImg"
+#define SIMGLINK_HOST "150.89.xxx.xxx"  //<-ここをwebapplicationで使用しているマシンのIPアドレスに変更する.
+#define SIMGLINK_PORTNO 8080
+```　  
 
-4. プログラムのコンパイル
+4. apacheのインストール  
+このプログラムを https://github.com/igakilab/webapplication で利用する場合,raspberry pi上でWebサーバを建てる必要がある.  
+以下のコマンドを実行し,apacheをインストールする.  
+~~~
+sudo apt-get install apache2
+~~~
+
+5. プログラムのコンパイル
 以下のコマンドによりコンパイルする.  
-mkdir ~/facedetect  
 cd ~/raspicam/facesender  
-make deploy  
+sudo mkdir ~/facedetect  
+sudo make deploy  
 
-5. プログラムの実行
+6. プログラムの実行
 プログラムはfacesender内のstart.shから実行できる.以下のコマンドを実行すること.  
 cd ~/raspicam/facesender
-./start.sh
+sudo ./start.sh
