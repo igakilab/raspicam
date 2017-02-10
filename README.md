@@ -4,12 +4,13 @@
 ## raspberry piの初期設定
 https://igakilab.gitbooks.io/gt-2016-mojava-manual/content/chapter1/raspberrypi.html  
 https://igakilab.gitbooks.io/gt-2016-mojava-manual/content/chapter1/raspi-system-settings.html  
-を参考に,raspberry piの初期設定を行う.
+を参考に,raspberry piの初期設定を行う."SSHによるログイン"まで完了させると,同一ネットワークのPCからRLoginやTera TermなどのターミナルソフトでSSH接続できるようになる.
 
 ## プログラムのコンパイルと実行
 raspberry pi上で顔認証プログラムを実行するにあたって,リポジトリ上のコードをコンパイルする必要がある.  
+
 1. 前提ライブラリのインストール  
-任意の方法でraspberry pi上のCUIを開き,  
+任意の方法でraspberry pi上のターミナルを開き,  
 sudo apt-get update  
 sudo apt-get install libopencv-dev  
 と実行する.なお,これらのコマンドは失敗することがある.その場合は同じコマンドを再度実行すること.
