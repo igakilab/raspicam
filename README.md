@@ -1,5 +1,5 @@
 # raspicam  
-ラズパイの顔認証  
+raspberry piでの顔認証用プログラム  
 
 ## raspberry piの初期設定
 本プログラムではraspberry piを使用する.以下の手順により初期設定を行う.  
@@ -40,19 +40,18 @@ git clone git://github.com/igakilab/raspicam
 
 3. 送信先IPアドレスの変更
 このプログラムを https://github.com/igakilab/webapplication で利用する場合,送信先IPアドレスの変更が必要である.  
-nano等のテキストエディタを用いて ~/raspicam/facesender/sendhr.h にある定義を変更することで,特定マシンへのデータ送信が可能となる.
-```sendhr.h
-#define SIMGLINK_URI_HEAD "/LabMemberManager/dwr/jsonp/FaceCollector/addImg"
-#define SIMGLINK_HOST "150.89.xxx.xxx"  //<-ここをwebapplicationで使用しているマシンのIPアドレスに変更する.
-#define SIMGLINK_PORTNO 8080
-```　  
+nano等のテキストエディタを用いて ~/raspicam/facesender/sendhr.h にある定義を変更することで,特定マシンへのデータ送信が可能となる.  
+\#define SIMGLINK_URI_HEAD "/LabMemberManager/dwr/jsonp/FaceCollector/addImg"  
+\#define SIMGLINK_HOST "150.89.xxx.xxx"  //<-ここをwebapplicationで使用しているマシンのIPアドレスに変更する.  
+\#define SIMGLINK_PORTNO 8080  
 
 4. apacheのインストール  
 このプログラムを https://github.com/igakilab/webapplication で利用する場合,raspberry pi上でWebサーバを建てる必要がある.  
 以下のコマンドを実行し,apacheをインストールする.  
-~~~
-sudo apt-get install apache2
-~~~
+sudo apt-get install apache2  
+また,プログラムにより生成されたファイルを外部に公開するため,続けて以下のコマンドを実行する.  
+sudo mkdir /var/www/images  
+sudo ln -s /var/www/images /var/www/html/images  
 
 5. プログラムのコンパイル
 以下のコマンドによりコンパイルする.  
