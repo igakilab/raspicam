@@ -45,9 +45,11 @@ git clone git://github.com/igakilab/raspicam
 1. 送信先IPアドレスの変更
 このプログラムをhttps://github.com/igakilab/webapplicationで利用する場合,送信先IPアドレスの変更が必要である.  
 ~/raspicam/facesender/sendhr.h にある定義を変更することで,特定マシンへのデータ送信が可能となる.必要ならば,nano等のテキストエディタを用いて変更する.  
+```sendhr.h
 #define SIMGLINK_URI_HEAD "/LabMemberManager/dwr/jsonp/FaceCollector/addImg"  
 #define SIMGLINK_HOST "150.89.xxx.xxx"  //←ここをwebapplicationで使用しているマシンのIPアドレスに変更する.  
 #define SIMGLINK_PORTNO 8080  
+```  
 
 1. プログラムのコンパイル
 以下のコマンドによりコンパイルする.  
