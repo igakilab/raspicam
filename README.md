@@ -24,7 +24,7 @@ https://igakilab.gitbooks.io/gt-2016-mojava-manual/content/chapter1/raspi-system
 接続が完了したら電源を接続し,raspberry piを起動する.起動後ターミナルを開き,  
 sudo raspi-config  
 と実行する.するとコンフィグ画面に移行するので,  
-Enable Camera -> <はい> -> <Finish>  
+Enable Camera -> はい -> Finish  
 と選択する.その後再起動を促されるので, <はい> で再起動すればカメラの有効化は完了である.
 
 ## プログラムのコンパイルと実行
