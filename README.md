@@ -36,28 +36,29 @@ sudo apt-get update
 sudo apt-get install libopencv-dev  
 と実行する.なお,これらのコマンドは失敗することがある.その場合は同じコマンドを再度実行すること.
 
-1. リポジトリのクローン  
+2. リポジトリのクローン  
 raspberry pi上にこのリポジトリを以下のコマンドによりクローンする.  
 cd ~
 git clone git://github.com/igakilab/raspicam  
 このコマンドが正常に終了すれば, ~/raspicam に各ファイルがクローンされる.lsコマンドなどで確認すること.
 
-1. 送信先IPアドレスの変更
-このプログラムをhttps://github.com/igakilab/webapplicationで利用する場合,送信先IPアドレスの変更が必要である.  
+3. 送信先IPアドレスの変更
+このプログラムを https://github.com/igakilab/webapplication で利用する場合,送信先IPアドレスの変更が必要である.  
 ~/raspicam/facesender/sendhr.h にある定義を変更することで,特定マシンへのデータ送信が可能となる.必要ならば,nano等のテキストエディタを用いて変更する.  
+
 ```sendhr.h
 #define SIMGLINK_URI_HEAD "/LabMemberManager/dwr/jsonp/FaceCollector/addImg"  
 #define SIMGLINK_HOST "150.89.xxx.xxx"  //←ここをwebapplicationで使用しているマシンのIPアドレスに変更する.  
 #define SIMGLINK_PORTNO 8080  
 ```  
 
-1. プログラムのコンパイル
+4. プログラムのコンパイル
 以下のコマンドによりコンパイルする.  
 mkdir ~/facedetect  
 cd ~/raspicam/facesender  
 make deploy  
 
-1. プログラムの実行
+5. プログラムの実行
 プログラムはfacesender内のstart.shから実行できる.以下のコマンドを実行すること.  
 cd ~/raspicam/facesender
 ./start.sh
